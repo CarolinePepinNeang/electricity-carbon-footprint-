@@ -1,5 +1,5 @@
 DROP SCHEMA IF EXISTS ElectricOrigin;
-CREATE DATABASE ElectricOrigin CHARACTER SET 'utf8';
+CREATE DATABASE ElectricOrigin CHARACTER SET utf8;
 USE ElectricOrigin;
 
 #############
@@ -8,8 +8,8 @@ USE ElectricOrigin;
 
 DROP TABLE IF EXISTS MaConso;
 CREATE TABLE MaConso(
-	date_hour TEXT
-	,consumption_hour TEXT
+	date_hour
+	,consumption_hour
 );
 
 
@@ -18,6 +18,19 @@ CREATE TABLE MaConso(
 #######################
 DROP TABLE IF EXISTS ProductionFiliere;
 CREATE TABLE ProductionFiliere(
+	TIME_SLOT
+	,BIOMASS
+	,FOSSIL_GAS
+	,FOSSIL_HARD_COAL
+	,FOSSIL_OIL
+	,HYDRO_PUMPED_STORAGE
+	,HYDRO_RUN_OF_RIVER_AND_POUNDAGE
+	,HYDRO_WATER_RESERVOIR
+	,NUCLEAR
+	,SOLAR
+	,WASTE
+	,WIND_ONSHORE
+	,TOTAL
 );
 
 
@@ -26,6 +39,10 @@ CREATE TABLE ProductionFiliere(
 #################
 DROP TABLE IF EXISTS EmissionCO2;
 CREATE TABLE EmissionCO2(
+	charbon
+	,fioul
+	,gaz
+	,dechets
 );
 
 
@@ -34,6 +51,13 @@ CREATE TABLE EmissionCO2(
 #################
 DROP TABLE IF EXISTS Utilisateur;
 CREATE TABLE Utilisateur(
+	id
+	,nom
+	,prenom
+	,mail
+	,password
+	,composition_menage
+
 );
 
 
@@ -42,4 +66,7 @@ CREATE TABLE Utilisateur(
 #####################
 DROP TABLE IF EXISTS CarbonFootprint;
 CREATE TABLE CarbonFootprint(
+	id
+	,poids
+	,utilisateur_id
 );
