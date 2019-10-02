@@ -1,58 +1,48 @@
 ###############################################################
-###############################################################
 ### PROJET CERTIFICATION : ELECTRIC CARBON FOOTPRINT _ DATA ###
-###############################################################
 ###############################################################
 
 USE ElectricOrigin;
-
-
-#################
-## EmissionCO2 ##
-#################
-INSERT INTO EmissionCO2 (filiere, contribution)
-VALUES ('FOSSIL_HARD_COAL', 0.986)
-	,('FOSSIL_OIL', 0.777)
-	,('FOSSIL_GAS', 0.474)
-	,('BIOMASS', 0.988)
-	,('WASTE',0.988)
-	,('HYDRO_PUMPED_STORAGE', 0)
-	,('HYDRO_RUN_OF_RIVER_AND_POUNDAGE', 0)
-	,('HYDRO_WATER_RESERVOIR', 0)
-	,('NUCLEAR', 0)
-	,('SOLAR', 0)
-	,('WIND_ONSHORE', 0);
-
-
-
-#################
-## Utilisateur ##
-#################
-INSERT INTO Utilisateur(nom, prenom, mail, password, composition_menage)
-VALUES('PEPIN-NEANG', 'Caroline', 'caroline.neang@gmail.com', SHA1('mon_motdepasse'), 2);
-
-
-#############
-## MaConso ##
-#############
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/CertificationData/fournisseur/ConsoEnedis_df_1002.csv'
-INTO TABLE MaConso
+###############
+## timeslots ##
+###############
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/CertificationData/timeslots.csv'
+INTO TABLE timeslots
 FIELDS TERMINATED BY ',' 
 LINES TERMINATED BY '\r\n'
 ignore 1 lines;
 
+###########
+## users ##
+###########
+INSERT INTO users(user_id, lastname, firstname, mail, password, number_people)
+VALUES(116,'PEPIN-NEANG', 'Caroline', 'caroline.neang@gmail.com', 'mon_motdepasse', 2);
 
 #######################
-## ProductionFiliere ##
+## production_fields ##
 #######################
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/CertificationData/RTE/ProductionFiliere.csv'
-INTO TABLE ProductionFiliere
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/CertificationData/production_fields.csv'
+INTO TABLE production_fields
 FIELDS TERMINATED BY ',' 
 LINES TERMINATED BY '\r\n'
 ignore 1 lines;
 
-#####################
-## CarbonFootprint ##
-#####################
-INSERT INTO CarbonFootprint(poids, utilisateur_id)
-VALUES();
+#################
+## productions ##
+#################
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/CertificationData/productions.csv'
+INTO TABLE productions
+FIELDS TERMINATED BY ',' 
+LINES TERMINATED BY '\r\n'
+ignore 1 lines;
+
+##################
+## consumptions ##
+##################
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/CertificationData/consumptions.csv'
+INTO TABLE consumptions
+FIELDS TERMINATED BY ',' 
+LINES TERMINATED BY '\r\n'
+ignore 1 lines
+(timeslot,user_id,consumption,@carbon_footprint)
+SET carbon_footprint= nullif(@carbon_footprint, 'NULL');
